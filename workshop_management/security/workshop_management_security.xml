@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.module.category" id="module_category_workshop_management">
+        <field name="name">Workshop management</field>
+        <field name="description">User access level for Workshop management
+            module
+        </field>
+        <field name="sequence">21</field>
+    </record>
+    <record id="workshop_management_group_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id"
+               ref="workshop_management.module_category_workshop_management"/>
+    </record>
+    <record id="workshop_management_group_mechanic" model="res.groups">
+        <field name="name">Mechanic</field>
+        <field name="category_id"
+               ref="workshop_management.module_category_workshop_management"/>
+    </record>
+    <record id="workshop_management_group_reception" model="res.groups">
+        <field name="name">Reception</field>
+        <field name="category_id"
+               ref="workshop_management.module_category_workshop_management"/>
+        <field name="implied_ids"
+               eval="[(4, ref('workshop_management_group_user')),(4, ref('workshop_management_group_mechanic'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    PDF report action for travel management-->
+    <record id="action_report_work_order" model="ir.actions.report">
+        <field name="name">Work order</field>
+        <field name="model">work.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">workshop_management.report_work_order</field>
+        <field name="report_file">workshop_management.report_work_order</field>
+        <field name="binding_model_id" ref="model_work_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

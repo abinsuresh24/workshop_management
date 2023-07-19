@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--    Workshop appointment form view-->
+    <record id="workshop_appointment_view_form" model="ir.ui.view">
+        <field name="name">workshop.appointment.view.form</field>
+        <field name="model">workshop.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="appointment_confirm" string="Confirm"
+                            type="object" class="oe_highlight" states="draft"/>
+                    <button name="receive_vehicle" string="Receive"
+                            type="object" class="oe_highlight"
+                            states="confirmed"/>
+                    <button name="vehicle_pickup" string="To-work"
+                            type="object" class="oe_highlight"
+                            states="received"/>
+                    <button name="appointment_cancel" string="Cancel"
+                            type="object" class="oe_highlight"
+                            states="confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="smart_button_work_order" string="Service"
+                            type="object" class="oe_stat_button" icon="fa-car"
+                            states="to_work"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="appointment_no"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="address"/>
+                            <field name="vehicle_id"/>
+                            <field name="total_km"/>
+                        </group>
+                        <group>
+                            <field name="booking_date"/>
+                            <field name="appointment_date"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Complaints">
+                            <field name="compliant_ids">
+                                <tree>
+                                    <field name="complaints"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                        <page string="Other info">
+                            <group>
+                                <group>
+                                    <field name="responsible_id"/>
+                                    <field name="company_id"/>
+                                    <field name="maintenance_reminder"/>
+                                </group>
+                                <group>
+                                    <field name="other_vehicle_ids" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--    Workshop appointment tree view-->
+    <record id="workshop_appointment_view_tree" model="ir.ui.view">
+        <field name="name">workshop.appointment.view.tree</field>
+        <field name="model">workshop.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="appointment_no"/>
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="total_km"/>
+                <field name="appointment_date"/>
+                <field name="phone" optional="hide"/>
+                <field name="email" optional="hide"/>
+                <field name="state" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <!--    Workshop appointment view action -->
+    <record id="workshop_appointment_action" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="res_model">workshop.appointment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_root"
+              name="Workshop"
+              sequence="2">
+    </menuitem>
+    <menuitem id="menu_appointment"
+              name="Appointment"
+              parent="menu_root"
+              action="workshop_appointment_action"
+              sequence="0"/>
+</odoo>

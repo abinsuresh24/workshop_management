@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--    Work order form view-->
+    <record id="work_order_view_form" model="ir.ui.view">
+        <field name="name">work.order.view.form</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,running,done"/>
+                    <button name="start_work" string="Start"
+                            type="object" class="btn-success"
+                            states="draft"/>
+                    <button name="request_approval" string="Request approval"
+                            type="object" class="oe_highlight"
+                            states="running"/>
+                    <button name="stop_work" string="Stop"
+                            type="object" class="btn-danger"
+                            states="running,request_approved,request_rejected"/>
+                    <button name="work_confirm" string="Confirm"
+                            type="object" class="oe_highlight"
+                            states="done"/>
+                    <button name="create_invoice" string="Create invoice"
+                            type="object" class="oe_highlight"
+                            states="repaired"/>
+                    <button name="create_report" string="PDF Report"
+                            type="object" class="oe_highlight"
+                            states="repaired"/>
+                    <button name="work_cancel" string="Cancel"
+                            type="object" class="oe_highlight"
+                            states="draft"/>
+                    <button name="receive_vehicle" string="Receive vehicle"
+                            type="object" class="oe_highlight"
+                            states="repaired"/>
+                    <button name="order_parts" string="Order For Parts"
+                            type="object" class="oe_highlight"
+                            states="running"/>
+                    <button name="continue_work" string="Continue work"
+                            type="object" class="oe_highlight"
+                            states="waiting"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="smart_button_invoice"
+                                string="Invoice"
+                                type="object" class="oe_stat_button"
+                                icon="fa-edit" states="repaired"/>
+                        <button name="smart_button_purchase"
+                                string="Purchase order"
+                                type="object" class="oe_stat_button"
+                                icon="fa-credit-card" states="waiting"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="order_no"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="appointment_no"/>
+                            <field name="mechanic_id"/>
+                            <field name="customer_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="odo_meter"/>
+                            <field name="payment_option" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="booking_date"/>
+                            <field name="appointment_date"/>
+                            <field name="phone"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="payment_method_type"
+                                   attrs="{'invisible': [('payment_option', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Materials">
+                            <field name="material_order_ids">
+                                <tree editable="bottom">
+                                    <field name="materials_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price"/>
+                                    <field name="total_price"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Extra components">
+                            <field name="extra_components_ids">
+                                <tree editable="bottom">
+                                    <field name="extra_components"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--    Workshop order tree view-->
+    <record id="work_order_view_tree" model="ir.ui.view">
+        <field name="name">work.order.view.tree</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="order_no"/>
+                <field name="customer_id"/>
+                <field name="vehicle_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </tree>
+        </field>
+    </record>
+    <!--    Workshop appointment view action -->
+    <record id="workshop_order_action" model="ir.actions.act_window">
+        <field name="name">Work order</field>
+        <field name="res_model">work.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_work_order" name="Work Order" parent="menu_root"
+              action="workshop_order_action" sequence="0"/>
+</odoo>

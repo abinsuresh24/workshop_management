@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--        Automated action for reminder mail service-->
+        <record id="ir_cron_scheduler_reminder_action" model="ir.cron">
+            <field name="name">Reminder for appointment</field>
+            <field name="model_id" ref="model_workshop_appointment"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.reminder_mail()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        <!--        Automated action for maintenance mail service-->
+          <record id="ir_cron_scheduler_maintenance_action" model="ir.cron">
+            <field name="name">Reminder for service maintenance</field>
+            <field name="model_id" ref="model_workshop_appointment"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.maintenance_mail()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+    </data>
+</odoo>

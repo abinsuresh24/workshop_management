@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--    Inherited template for adding work order menu in portal-->
+    <template id="portal_my_home_work_order" name="Workorder"
+              customize_show="True" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Work Orders</t>
+                <t t-set="url" t-value="'/my/work_order_web'"/>
+                <t t-set="placeholder_count" t-value="'order_count'"/>
+            </t>
+        </xpath>
+    </template>
+    <!--    Template created for showing work orders in the portal as list view-->
+    <template id="work_order_portal_list">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th class="text-right">Work orders</th>
+                        <th class="text-right">Vehicle</th>
+                        <th class="text-right">Start date</th>
+                        <th class="text-right">End date</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="orders" t-as="rec">
+                        <tr>
+                            <td>
+                                <a t-attf-href="/my/work_order_web/#{rec.id}">
+                                    <t t-out="rec.order_no"/>
+                                </a>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="rec.vehicle_id"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="rec.start_date"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="rec.end_date"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+    <!--    Template created for showing work order in the portal as form view-->
+    <template id="work_order_portal_form" inherit_id="portal.portal_sidebar">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <section style="background-color: #eee;">
+                <div class="container py-5">
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Order No.</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            <t t-out="orders.order_no"/>
+                                        </p>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Name</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            <t t-out="orders.customer_id.name"/>
+                                        </p>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Vehicle</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            <t t-out="orders.vehicle_id.name"/>
+                                        </p>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Start date</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            <t t-out="orders.start_date"/>
+                                        </p>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">End date</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            <t t-out="orders.end_date"/>
+                                        </p>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Additional Works</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            <t t-foreach="orders.extra_components_ids"
+                                               t-as="line">
+                                                <t t-out="line.extra_components"/>
+                                                <br/>
+                                            </t>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mb-0">
+                                    <a t-attf-href="/my/work_order_web/#{orders.id}/approve">
+                                        <button type="button"
+                                                class="btn btn-primary">Approve
+                                        </button>
+                                    </a>
+                                    <a t-attf-href="/my/work_order_web/#{orders.id}/reject"><button type="button"
+                                            class="btn btn-outline-primary ms-1">
+                                        Reject
+                                    </button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </template>
+<!--    Template created for showing approve success message-->
+    <template id="work_order_portal_approve">
+        <t t-call="portal.portal_layout">
+            <p><h1>Approve Success</h1></p>
+        </t>
+    </template>
+    <!--    Template created for showing rejection success message-->
+    <template id="work_order_portal_reject">
+        <t t-call="portal.portal_layout">
+            <p><h1>Approve Rejected</h1></p>
+        </t>
+    </template>
+</odoo>

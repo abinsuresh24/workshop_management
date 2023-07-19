@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    Template for te PDF report-->
+    <template id="report_work_order">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="text-center">
+                        <h2>Work Order Report</h2>
+                    </div>
+                    <br></br>
+                    <div>
+                        <h5>Customer:
+                            <t t-if="form_data.get('customer_id')">
+                                <t t-esc="form_data['customer_id'][1]">
+                                </t>
+                            </t>
+                        </h5>
+                        <h5>Vehicle:
+                            <t t-if="form_data.get('vehicle_id')">
+                                <t t-esc="form_data['vehicle_id'][1]">
+                                </t>
+                            </t>
+                        </h5>
+                        <h5>Start date:
+                            <t t-if="form_data.get('start_date')">
+                                <t t-esc="form_data['start_date']">
+                                </t>
+                            </t>
+                        </h5>
+                        <h5>End date:
+                            <t t-if="form_data.get('end_date')">
+                                <t t-esc="form_data['end_date']">
+                                </t>
+                            </t>
+                        </h5>
+                    </div>
+                    <br></br>
+                    <br></br>
+                    <div>
+                        <table class="table table-bordered mt32">
+                            <thead>
+                                <tr>
+                                    <th name="th_reference" class="text-left">
+                                        <span>Sl. No</span>
+                                    </th>
+                                    <th name="th_materials"
+                                        class="text-left">
+                                        <span>Materials used</span>
+                                    </th>
+                                    <th name="th_quantity"
+                                        class="text-left">
+                                        <span>Quantity</span>
+                                    </th>
+                                    <th name="th_price"
+                                        class="text-left">
+                                        <span>Price</span>
+                                    </th>
+                                    <th name="th_total"
+                                        class="text-left">
+                                        <span>Total</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <t t-set="materials"
+                               t-value="request.env['material.order'].browse(material)"/>
+                            <t t-foreach="materials" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-esc="line_index+1"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.materials_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.quantity"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.price"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.total_price"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
