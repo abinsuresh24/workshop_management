@@ -11,7 +11,7 @@
             </t>
         </xpath>
     </template>
-    <!--    Template created for showing work orders in the portal as list view-->
+    <!--  Template created for showing work orders in the portal as list view-->
     <template id="work_order_portal_list">
         <t t-call="portal.portal_layout">
             <t t-call="portal.portal_table">
@@ -125,15 +125,20 @@
                                     </div>
                                 </div>
                                 <div class="mb-0">
-                                    <a t-attf-href="/my/work_order_web/#{orders.id}/approve">
-                                        <button type="button"
-                                                class="btn btn-primary">Approve
-                                        </button>
-                                    </a>
-                                    <a t-attf-href="/my/work_order_web/#{orders.id}/reject"><button type="button"
-                                            class="btn btn-outline-primary ms-1">
-                                        Reject
-                                    </button></a>
+                                    <t t-if="orders.extra_components_ids">
+                                        <a t-attf-href="/my/work_order_web/#{orders.id}/approve">
+                                            <button type="button"
+                                                    class="btn btn-primary">
+                                                Approve
+                                            </button>
+                                        </a>
+                                        <a t-attf-href="/my/work_order_web/#{orders.id}/reject">
+                                            <button type="button"
+                                                    class="btn btn-outline-primary ms-1">
+                                                Reject
+                                            </button>
+                                        </a>
+                                    </t>
                                 </div>
                             </div>
                         </div>
@@ -142,16 +147,20 @@
             </section>
         </xpath>
     </template>
-<!--    Template created for showing approve success message-->
+    <!--    Template created for showing approve success message-->
     <template id="work_order_portal_approve">
         <t t-call="portal.portal_layout">
-            <p><h1>Approve Success</h1></p>
+            <p>
+                <h1>Approve Success</h1>
+            </p>
         </t>
     </template>
     <!--    Template created for showing rejection success message-->
     <template id="work_order_portal_reject">
         <t t-call="portal.portal_layout">
-            <p><h1>Approve Rejected</h1></p>
+            <p>
+                <h1>Approve Rejected</h1>
+            </p>
         </t>
     </template>
 </odoo>

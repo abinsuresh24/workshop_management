@@ -13,8 +13,7 @@
                             type="object" class="btn-success"
                             states="draft"/>
                     <button name="request_approval" string="Request approval"
-                            type="object" class="oe_highlight"
-                            states="running"/>
+                            type="object" class="oe_highlight" states="running"/>
                     <button name="stop_work" string="Stop"
                             type="object" class="btn-danger"
                             states="running,request_approved,request_rejected"/>
